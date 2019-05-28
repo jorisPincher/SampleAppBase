@@ -1,0 +1,8 @@
+<resources>
+    <string name="app_name">MovieTest</string>
+    <string name="detail.title">Title : </string>
+    <string name="detail.release_date">Release date : </string>
+    <string name="detail.genre">Genre : </string>
+    <string name="detail.language">Language : </string>
+    <string name="detail.overview">Overview</string>
+</resources>

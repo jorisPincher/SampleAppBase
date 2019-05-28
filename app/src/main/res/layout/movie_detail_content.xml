@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android" xmlns:tools="http://schemas.android.com/tools"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent">
+    <LinearLayout android:layout_width="match_parent"
+                  android:orientation="horizontal"
+                  android:layout_marginBottom="5dp"
+                  android:layout_height="wrap_content">
+        <TextView android:layout_width="wrap_content"
+                  android:textColor="@android:color/black"
+                  android:text="@string/detail.title"
+                  android:textStyle="bold"
+                  android:layout_height="wrap_content"/>
+        <TextView android:layout_width="match_parent"
+                  android:id="@+id/detail_title"
+                  android:layout_marginStart="5dp"
+                  android:textColor="@android:color/black"
+                  tools:text="Pulp Fiction"
+                  android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent"
+                  android:orientation="horizontal"
+                  android:layout_marginBottom="5dp"
+                  android:layout_height="wrap_content">
+        <TextView android:layout_width="wrap_content"
+                  android:textColor="@android:color/black"
+                  android:text="@string/detail.release_date"
+                  android:textStyle="bold"
+                  android:layout_height="wrap_content"/>
+        <TextView android:layout_width="match_parent"
+                  android:layout_marginStart="5dp"
+                  android:id="@+id/detail_release_date"
+                  android:textColor="@android:color/black"
+                  tools:text="2000-01-01"
+                  android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent"
+                  android:orientation="horizontal"
+                  android:layout_marginBottom="5dp"
+                  android:layout_height="wrap_content">
+        <TextView android:layout_width="wrap_content"
+                  android:textColor="@android:color/black"
+                  android:text="@string/detail.genre"
+                  android:textStyle="bold"
+                  android:layout_height="wrap_content"/>
+        <TextView android:layout_width="match_parent"
+                  android:id="@+id/detail_genre"
+                  android:layout_marginStart="5dp"
+                  android:textColor="@android:color/black"
+                  tools:text="Fiction - Action - Drama"
+                  android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent"
+                  android:orientation="horizontal"
+                  android:layout_marginBottom="20dp"
+                  android:layout_height="wrap_content">
+        <TextView android:layout_width="wrap_content"
+                  android:textColor="@android:color/black"
+                  android:text="@string/detail.language"
+                  android:textStyle="bold"
+                  android:layout_height="wrap_content"/>
+        <TextView android:layout_width="match_parent"
+                  android:layout_marginStart="5dp"
+                  android:id="@+id/detail_language"
+                  android:textColor="@android:color/black"
+                  tools:text="en-US"
+                  android:layout_height="wrap_content"/>
+    </LinearLayout>
+    <LinearLayout android:layout_width="match_parent"
+                  android:orientation="vertical"
+                  android:layout_height="wrap_content">
+        <TextView android:layout_width="wrap_content"
+                  android:textColor="@android:color/black"
+                  android:text="@string/detail.overview"
+                  android:textStyle="bold"
+                  android:textSize="18sp"
+                  android:layout_marginBottom="5dp"
+                  android:layout_height="wrap_content"/>
+        <TextView android:layout_width="match_parent"
+                  android:id="@+id/detail_overview"
+                  android:textColor="@android:color/black"
+                  tools:text="A ticking-time-bomb insomniac and a slippery soap salesman channel primal male aggression into a shocking new form of therapy. Their concept catches on, with underground fight clubs forming in every town, until an eccentric gets in the way and ignites an out-of-control spiral toward oblivion."
+                  android:layout_height="wrap_content"/>
+    </LinearLayout>
+</LinearLayout>
