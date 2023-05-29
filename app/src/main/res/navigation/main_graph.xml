@@ -3,7 +3,7 @@
         xmlns:app="http://schemas.android.com/apk/res-auto"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/main_graph"
-        app:startDestination="@id/movieListFragment">
+        app:startDestination="@id/onboardingFragment">
 
     <fragment
             android:id="@+id/movieListFragment"
@@ -22,4 +22,8 @@
                 android:name="movieId"
                 app:argType="integer" />
     </fragment>
+    <fragment
+            android:id="@+id/onboardingFragment"
+            android:name="fr.jorisfavier.movietest.ui.onboarding.OnboardingFragment"
+            android:label="OnboardingFragment" />
 </navigation>
