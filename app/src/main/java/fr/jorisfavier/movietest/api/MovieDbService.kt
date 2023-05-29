@@ -1,13 +1,10 @@
 package fr.jorisfavier.movietest.api
 
-import com.google.gson.GsonBuilder
-import com.google.gson.JsonDeserializer
 import fr.jorisfavier.movietest.models.dto.ChangedMovieDTO
 import fr.jorisfavier.movietest.models.dto.MovieDetailDTO
 import fr.jorisfavier.movietest.models.dto.ResultDTO
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
-import retrofit2.Call
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.http.GET
@@ -17,16 +14,21 @@ import java.util.*
 
 interface MovieDbService {
     @GET("movie/changes")
-    fun lastChangedMovies(@Query("end_date") endDate: Date?,
-                          @Query("start_date") startDate: Date?,
-                          @Query("page") page: Int?) : Call<ResultDTO<ChangedMovieDTO>>
+    suspend fun lastChangedMovies(
+        @Query("end_date") endDate: Date?,
+        @Query("start_date") startDate: Date?,
+        @Query("page") page: Int?
+    ): ResultDTO<ChangedMovieDTO>
+
     @GET("movie/{id}")
-    fun getMovieDetail(@Path("id") id: Int,
-                       @Query("language") language: String?): Call<MovieDetailDTO>
+    suspend fun getMovieDetail(
+        @Path("id") id: Int,
+        @Query("language") language: String?
+    ): MovieDetailDTO
 
     companion object {
-        val apiKey = "<APIKey>"
-        val imageBaseUrl = "https://image.tmdb.org/t/p/original/"
+        private const val apiKey = "9d7df10f66289578b3d1eb93b8f024cb"
+        const val imageBaseUrl = "https://image.tmdb.org/t/p/original/"
 
         fun create(): MovieDbService {
             //We create an interceptor to add an api key to each
@@ -46,7 +48,8 @@ interface MovieDbService {
             val client = OkHttpClient.Builder().addInterceptor(interceptor).build()
             val retrofit = Retrofit.Builder()
                 .addConverterFactory(
-                    GsonConverterFactory.create())
+                    GsonConverterFactory.create()
+                )
                 .baseUrl("https://api.themoviedb.org/3/")
                 .client(client)
                 .build()

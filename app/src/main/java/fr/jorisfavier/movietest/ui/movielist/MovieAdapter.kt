@@ -1,28 +1,26 @@
 package fr.jorisfavier.movietest.ui.movielist
 
+import android.view.LayoutInflater
 import android.view.ViewGroup
-import androidx.recyclerview.widget.RecyclerView
-import fr.jorisfavier.movietest.R
+import androidx.recyclerview.widget.ListAdapter
+import fr.jorisfavier.movietest.databinding.MovieViewholderBinding
 import fr.jorisfavier.movietest.models.Movie
-import fr.jorisfavier.movietest.utils.inflate
 
-class MovieAdapter(private var movieList: List<Movie>) : RecyclerView.Adapter<MovieViewHolder>() {
+class MovieAdapter(
+    private val onItemClicked: (Int) -> Unit,
+) : ListAdapter<Movie, MovieViewHolder>(Movie.diffUtilCallback) {
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MovieViewHolder {
-        val view = parent.inflate(R.layout.movie_viewholder, false)
-        return MovieViewHolder(view)
-    }
-
-    override fun getItemCount(): Int {
-        return movieList.size
+        val inflater = LayoutInflater.from(parent.context)
+        return MovieViewHolder(
+            onItemClicked = onItemClicked,
+            binding = MovieViewholderBinding.inflate(inflater, parent, false),
+        )
     }
 
     override fun onBindViewHolder(holder: MovieViewHolder, position: Int) {
-        holder.bind(movieList[position])
+        val item = getItem(position)
+        holder.bind(item)
     }
 
-    fun updateMovieList(movies: List<Movie>){
-        movieList = movies
-        notifyDataSetChanged()
-    }
 
 }

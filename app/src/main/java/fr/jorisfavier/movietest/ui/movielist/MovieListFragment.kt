@@ -1,67 +1,65 @@
 package fr.jorisfavier.movietest.ui.movielist
 
 import android.os.Bundle
-import android.view.LayoutInflater
 import android.view.View
-import android.view.ViewGroup
+import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.Observer
-import androidx.lifecycle.ViewModelProviders
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.GridLayoutManager
-import fr.jorisfavier.movietest.MovieTestApp
 import fr.jorisfavier.movietest.R
-import fr.jorisfavier.movietest.manager.IMovieManager
-import kotlinx.android.synthetic.main.movie_list_fragment.*
-import javax.inject.Inject
+import fr.jorisfavier.movietest.databinding.MovieListFragmentBinding
+import fr.jorisfavier.movietest.ui.moviedetail.MovieDetailFragment
+import fr.jorisfavier.movietest.utils.autoCleared
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
-class MovieListFragment : Fragment() {
+class MovieListFragment : Fragment(R.layout.movie_list_fragment) {
 
-    companion object {
-        fun newInstance() = MovieListFragment()
+    private val binding by autoCleared {
+        MovieListFragmentBinding.bind(requireView())
     }
 
-    private lateinit var viewModel: MovieListViewModel
+    private val viewModel: MovieListViewModel by viewModel()
 
-    @Inject
-    lateinit var movieManager: IMovieManager
-
-    private var movieAdapter: MovieAdapter = MovieAdapter(ArrayList())
-
-    override fun onCreateView(
-        inflater: LayoutInflater, container: ViewGroup?,
-        savedInstanceState: Bundle?
-    ): View {
-        return inflater.inflate(R.layout.movie_list_fragment, container, false)
+    private val movieAdapter: MovieAdapter by lazy {
+        MovieAdapter(
+            onItemClicked = this::navigateToMovieDetail,
+        )
     }
 
-    override fun onActivityCreated(savedInstanceState: Bundle?) {
-        super.onActivityCreated(savedInstanceState)
-        MovieTestApp.currentInstance?.movieTestComponent?.inject(this)
-        viewModel = ViewModelProviders.of(this).get(MovieListViewModel::class.java)
-        viewModel.movieManager = movieManager
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
         initRecyclerView()
         initErrorHandler()
         viewModel.loadMovies()
     }
 
     private fun initRecyclerView() {
-        movie_list.layoutManager = GridLayoutManager(context,3)
-        movie_list.adapter = movieAdapter
-        viewModel.getMovies().observe(this, Observer { movies ->
-            if (movies.size > 0) {
-                list_loading.visibility = View.GONE
-                movieAdapter.updateMovieList(movies)
+        with(binding) {
+            movieList.layoutManager = GridLayoutManager(context, 3)
+            movieList.adapter = movieAdapter
+            viewModel.movies.observe(viewLifecycleOwner) { movies ->
+                if (movies.isNotEmpty()) {
+                    listLoading.visibility = View.GONE
+                    movieAdapter.submitList(movies)
+                }
             }
-        })
+        }
     }
 
-    private fun initErrorHandler(){
-        viewModel.getError().observe(this, Observer { errorMessage ->
+    private fun initErrorHandler() {
+        viewModel.error.observe(viewLifecycleOwner) { errorMessage ->
             if (errorMessage != null) {
-                list_error.text = errorMessage
-                list_error.visibility = View.VISIBLE
+                binding.listError.text = errorMessage
+                binding.listError.visibility = View.VISIBLE
             }
-        })
+        }
+    }
+
+    private fun navigateToMovieDetail(id: Int) {
+        findNavController().navigate(
+            R.id.movieDetailFragment,
+            bundleOf(MovieDetailFragment.movieIdKey to id)
+        )
     }
 
 }
